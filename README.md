@@ -22,7 +22,7 @@ I take no responsibility for the use of the API and do not guarantee its perform
 ## Installation
 Instructions on how to install `poetry` can be found [here](https://python-poetry.org/docs/#installation).
 
-Set up your virtual environment and install the dependencies:
+Set up your FastAPI virtual environment and install the dependencies:
 ```bash
 poetry install
 ```
