@@ -36,6 +36,6 @@ At the moment, following calls are available:
 * [ ] Add support for conditional requests (by price, merchant, discount rates, etc.)
 * [ ] More API endpoints
 * [ ] More scraped data per post (e.g. post author, post date, post sub-category, etc.)
-* [ ] Working full-time working website
+* [ ] Full-time working website
 ## Final remarks
 The operation of the program may change due to changes in the code of the site or the very libraries used to write this program.
