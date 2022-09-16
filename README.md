@@ -28,6 +28,7 @@ poetry install
 ```
 Run `main.py` from `/api/` folder to start the API service. It will automatically create a data file in new "data" folder. The API will be available at http://127.0.0.1:8000.
 ## Available calls
+At the moment, following calls are available:
 * `/` - returns a JSON connection confirmation
 * `/get/all` - returns a JSON with all posts
 * `/get/{category}` - returns a JSON with posts from a given category
