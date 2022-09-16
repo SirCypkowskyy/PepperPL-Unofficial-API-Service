@@ -157,6 +157,11 @@ class DatabaseScraperService:
             with open("../data/deals.json", "w", encoding="utf-8") as f:
                 json.dump({"categories": {}, "last_updated": ""}, f, indent=4)
 
+        if not os.path.exists("../data/checked_categories.txt"):
+            with open("../data/checked_categories.txt", "w", encoding="utf-8") as f:
+                f.write("gry\nelektronika\ndom-i-mieszkanie\nmoda\ndom\nzdrowie-i-uroda\ndla-dzieci\nartykuly"
+                        "-spozywcze\npodroze\nmotoryzacja\nrozrywka\nsport\nuslugi-i-subskrypcje")
+
         self.queue = asyncio.Queue()
         self.sch = AsyncIOScheduler()
         await self.update_json_file()
