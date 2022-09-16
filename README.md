@@ -2,7 +2,8 @@
     <img src="logo.png" width="150">
 </p>
 
-#Pepper.pl unofficial API service
+
+# Pepper.pl unofficial API service
 
 This is a simple API service for the [Pepper.pl](https://pepper.pl) website, based on page data scraping. It is not affiliated with the website or its creators in any way.
 
