@@ -24,6 +24,6 @@ Set up your virtual environment and install the dependencies:
 ```bash
 poetry install
 ```
-Run main.py from `/api/` folder to start the API service. It will automatically create a data file in new "data" folder. The API will be available at http://127.0.0.1:8000.
+Run `main.py` from `/api/` folder to start the API service. It will automatically create a data file in new "data" folder. The API will be available at http://127.0.0.1:8000.
 ## Final remarks
 The operation of the program may change due to changes in the code of the site or the very libraries used to write this program.
