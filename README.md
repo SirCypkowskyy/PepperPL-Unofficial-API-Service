@@ -22,11 +22,11 @@ I take no responsibility for the use of the API and do not guarantee its perform
 ## Installation
 Instructions on how to install `poetry` can be found [here](https://python-poetry.org/docs/#installation).
 
-Set up your FastAPI virtual environment and install the dependencies:
+Set up your poetry virtual environment and install the dependencies:
 ```bash
 poetry install
 ```
-Run `main.py` from `/api/` folder to start the API service. It will automatically create a data file in new "data" folder. The API will be available at http://127.0.0.1:8000.
+Run `main.py` from `/api/` folder to start the API service (setup FastAPI run configuration - PyCharm is recommended). It will automatically create a data file in new "data" folder, as well as file with "checked categories" from the site. The API will be available at http://127.0.0.1:8000.
 ## Available calls
 At the moment, following calls are available:
 * `/` - returns a JSON connection confirmation
