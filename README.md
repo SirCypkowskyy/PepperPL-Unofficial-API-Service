@@ -11,6 +11,7 @@ This is a simple API service for the [Pepper.pl](https://pepper.pl) website, bas
 * [Introduction](#introduction)
 * [Installation](#installation)
 * [Final remarks](#final-remarks)
+* [Available calls](#available-calls)
 ## Introduction
 
 This program is a simple Python script that runs in the background and periodically checks the pepper.pl website for new posts to scrap. It then stores the posts in a database and serves them through a simple API service (FastAPI).
@@ -25,5 +26,9 @@ Set up your virtual environment and install the dependencies:
 poetry install
 ```
 Run `main.py` from `/api/` folder to start the API service. It will automatically create a data file in new "data" folder. The API will be available at http://127.0.0.1:8000.
+## Available calls
+* `/` - returns a JSON connection confirmation
+* `/get/all` - returns a JSON with all posts
+* `/get/{category}` - returns a JSON with posts from a given category
 ## Final remarks
 The operation of the program may change due to changes in the code of the site or the very libraries used to write this program.
