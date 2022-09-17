@@ -17,6 +17,11 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 PEPPER_PL_WEBSITE = "https://www.pepper.pl/"
+DEFAULT_CATEGORIES = ("gry", "elektronika", "dom-i-mieszkanie", "moda",
+                      "dom", "zdrowie-i-uroda", "dla-dzieci", "artykuly-spozywcze",
+                      "podroze", "motoryzacja", "rozrywka", "sport", "uslugi-i-subskrypcje")
+
+DEBUG_MODE = False
 
 
 class DatabaseScraperService:
@@ -31,7 +36,8 @@ class DatabaseScraperService:
         print("Commencing update of JSON data file...")
         did_accept_cookies = False
         options = Options()
-        options.add_argument("--headless")
+        if not show_debug:
+            options.add_argument("--headless")
         options.add_argument("start-maximized")
         options.add_argument('--ignore-certificate-errors')
         options.add_argument('--incognito')
@@ -159,12 +165,11 @@ class DatabaseScraperService:
 
         if not os.path.exists("../data/checked_categories.txt"):
             with open("../data/checked_categories.txt", "w", encoding="utf-8") as f:
-                f.write("gry\nelektronika\ndom-i-mieszkanie\nmoda\ndom\nzdrowie-i-uroda\ndla-dzieci\nartykuly"
-                        "-spozywcze\npodroze\nmotoryzacja\nrozrywka\nsport\nuslugi-i-subskrypcje")
+                f.writelines('\n'.join(DEFAULT_CATEGORIES))
 
         self.queue = asyncio.Queue()
         self.sch = AsyncIOScheduler()
-        await self.update_json_file()
+        await self.update_json_file(show_debug=DEBUG_MODE)
         self.sch.start()
         self.sch.add_job(self.update_json_file,
                          "interval",
