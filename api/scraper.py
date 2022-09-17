@@ -21,22 +21,22 @@ DEFAULT_CATEGORIES = ("gry", "elektronika", "dom-i-mieszkanie", "moda",
                       "dom", "zdrowie-i-uroda", "dla-dzieci", "artykuly-spozywcze",
                       "podroze", "motoryzacja", "rozrywka", "sport", "uslugi-i-subskrypcje")
 
-DEBUG_MODE = False
-
 
 class DatabaseScraperService:
-    def __init__(self):
+    def __init__(self, database_update_intervals: int, debug_mode=False):
         self.sch = None
         self.queue = None
+        self.database_update_intervals = database_update_intervals
+        self.debug_mode = debug_mode
 
-    async def update_json_file(self, show_debug=False):
+    async def update_json_file(self):
         """
         Function for updating deals.json data file
         """
         print("Commencing update of JSON data file...")
         did_accept_cookies = False
         options = Options()
-        if not show_debug:
+        if not self.debug_mode:
             options.add_argument("--headless")
         options.add_argument("start-maximized")
         options.add_argument('--ignore-certificate-errors')
@@ -117,11 +117,13 @@ class DatabaseScraperService:
                         expires_at = expires_at.replace("Obowiązuje do ", "")
                     else:
                         expires_at = "No expiration date"
-                    if show_debug:
+                    if self.debug_mode:
+                        print("New deal found!")
                         print(
                             f"title: {title}\n"
                             f"description: {description}\n"
                             f"deal_link: {deal_link}\n"
+                            f"category: {category}\n"
                             f"original_price: {org_price}\n"
                             f"new_price: {new_price}\n"
                             f"discount_rate: {discount_rate}\n"
@@ -135,6 +137,7 @@ class DatabaseScraperService:
                             "title": title,
                             "description": description,
                             "deal_link": deal_link,
+                            "category": category,
                             "original_price": org_price,
                             "new_price": new_price,
                             "discount_rate": discount_rate,
@@ -158,19 +161,28 @@ class DatabaseScraperService:
         """
         print("Starting the service...")
         if not os.path.exists("../data"):
+            if self.debug_mode:
+                print("No data folder found!\nCreating data directory...")
             os.makedirs("../data")
         if not os.path.exists("../data/deals.json"):
+            if self.debug_mode:
+                print("No deals.json file found!\nCreating deals.json file...")
             with open("../data/deals.json", "w", encoding="utf-8") as f:
                 json.dump({"categories": {}, "last_updated": ""}, f, indent=4)
 
         if not os.path.exists("../data/checked_categories.txt"):
+            if self.debug_mode:
+                print("No checked_categories.txt file found!\nCreating checked_categories.txt file with default "
+                      "categories...")
             with open("../data/checked_categories.txt", "w", encoding="utf-8") as f:
                 f.writelines('\n'.join(DEFAULT_CATEGORIES))
 
         self.queue = asyncio.Queue()
         self.sch = AsyncIOScheduler()
-        await self.update_json_file(show_debug=DEBUG_MODE)
+        await self.update_json_file()
         self.sch.start()
+        if self.debug_mode:
+            print(f"Starting json file update service (update per {self.database_update_intervals} minutes)...")
         self.sch.add_job(self.update_json_file,
                          "interval",
                          minutes=5,

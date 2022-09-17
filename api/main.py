@@ -44,5 +44,5 @@ async def get_category(category: str):
 
 @app.on_event("startup")
 async def run_scheduler():
-    database_scraper_service = DatabaseScraperService()
+    database_scraper_service = DatabaseScraperService(5, False)
     await database_scraper_service.start()
