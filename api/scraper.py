@@ -54,9 +54,11 @@ class DatabaseScraperService:
                 bot.get(f"{PEPPER_PL_WEBSITE}grupa/{category}?page={i}")
                 if not did_accept_cookies:
                     sleep(1)
-                    btns = bot.find_element(By.XPATH,
-                                            '//*[@id="main"]/div[4]/div[1]/div/div/div/div[2]/div[2]/button[1]/span')
-                    btns.click()
+                    # new cookies' acceptation method
+                    btn = bot.find_element(By.XPATH, "//*[@data-t='acceptAllBtn']")
+                    # btns = bot.find_element(By.XPATH,
+                    #                         '//*[@id="main"]/div[4]/div[1]/div/div/div/div[2]/div[2]/button[1]/span')
+                    btn.click()
                     did_accept_cookies = True
                     sleep(0.5)
                 for j in range(1, 4):

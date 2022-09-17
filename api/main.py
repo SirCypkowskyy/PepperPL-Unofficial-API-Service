@@ -39,7 +39,10 @@ async def get_category(category: str):
     """
     with open("../data/deals.json", "r", encoding="utf-8") as f:
         json_file_contents = json.load(f)
-        return json_file_contents["categories"][category]
+        if json_file_contents["categories"][category] is not None:
+            return json_file_contents["categories"][category]
+        else:
+            return {"message": "Category not found"}
 
 
 @app.on_event("startup")
